@@ -292,7 +292,7 @@ if ($json["CMDBType"] == 0)
 
             $.ajax(
             {
-                url: "<?php echo $GLOBALS['server']; ?>" + "/capability/run/cmdb-compatible/" + cmdbID + "/" + capID,
+                url: "<?php echo $GLOBALS['api']; ?>" + "/capability/run/cmdb-compatible/" + cmdbID + "/" + capID,
                 type: "POST",
                 success: function (response) {
                     console.log(response);
@@ -308,7 +308,7 @@ if ($json["CMDBType"] == 0)
 
             $.ajax(
             {
-                url: "<?php echo $GLOBALS['server']; ?>" + "/cookbook/run/" + cookID + "/" + cmdbID,
+                url: "<?php echo $GLOBALS['api']; ?>" + "/cookbook/run/" + cookID + "/" + cmdbID,
                 type: "POST",
                 success: function (response) {
                     console.log(response);

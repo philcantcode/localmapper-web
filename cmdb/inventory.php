@@ -165,7 +165,7 @@
 
       $.ajax(
         {
-          url: "<?php echo $GLOBALS['server']; ?>" + "/cmdb/pending/put",
+          url: "<?php echo $GLOBALS['api']; ?>" + "/cmdb/pending/put",
           type: "POST",
           data: {
             "Label": label,

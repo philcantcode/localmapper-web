@@ -82,7 +82,7 @@
 
         $.ajax(
         {
-            url: "<?php echo $GLOBALS['server']; ?>" + "/cmdb/pending/approve",
+            url: "<?php echo $GLOBALS['api']; ?>" + "/cmdb/pending/approve",
             type: "POST",
             data: {
             "ID": id,
@@ -102,7 +102,7 @@
 
         $.ajax(
         {
-            url: "<?php echo $GLOBALS['server']; ?>" + "/cmdb/pending/deny",
+            url: "<?php echo $GLOBALS['api']; ?>" + "/cmdb/pending/deny",
             type: "POST",
             data: {
             "ID": id,
@@ -119,7 +119,7 @@
 
         $.ajax(
         {
-            url: "<?php echo $GLOBALS['server']; ?>" + "/cmdb/pending/deny/all",
+            url: "<?php echo $GLOBALS['api']; ?>" + "/cmdb/pending/deny/all",
             type: "POST",
             success: function (response) {
                 console.log(response);

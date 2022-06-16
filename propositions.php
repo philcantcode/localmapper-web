@@ -80,14 +80,14 @@ $( document ).ready(function()
 
         $.ajax(
         {
-            url: "<?php echo $GLOBALS['server']; ?>" + "/propositions/accept-defaults",
+            url: "<?php echo $GLOBALS['api']; ?>" + "/propositions/accept-defaults",
             type: "POST",
             data: {
               ID: propID,
             },
             success: function(response) 
             {
-                conslole.log(response);
+                console.log(response);
             }
         });
     });
