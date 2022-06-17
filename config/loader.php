@@ -3,7 +3,7 @@ $GLOBALS['root'] = $_SERVER['DOCUMENT_ROOT'];
 
 // Remote server functions
 $GLOBALS['api'] = "http://localhost:8008";
-$GLOBALS['server'] = "http://host.docker.internal:8008";
+$GLOBALS['server'] = "http://192.168.0.235:8008";
 $GLOBALS['web'] = "http://localhost";
 
 $GLOBALS['site-name'] = "localmapper-web";
