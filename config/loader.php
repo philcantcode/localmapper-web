@@ -3,7 +3,7 @@ $GLOBALS['root'] = $_SERVER['DOCUMENT_ROOT'];
 
 // Remote server functions
 $GLOBALS['api'] = "http://localhost:8008";
-$GLOBALS['server'] = "http://192.168.0.235:8008";
+$GLOBALS['server'] = "http://192.168.1.107:8008";
 $GLOBALS['web'] = "http://localhost";
 
 $GLOBALS['site-name'] = "localmapper-web";
@@ -28,7 +28,7 @@ function inventoryURL($id) {
 function searchByLabel($label, $array) {
 
     if (is_null($array)) {
-        return null;
+        return array("Values" => array("Unknown " . $label));
     }
 
     foreach ($array as $row) {
@@ -37,7 +37,7 @@ function searchByLabel($label, $array) {
         }
     }
 
-    return null;
+    return array("Values" => array("Unknown " . $label));
 }
 
 // Loads a JSON file from the server root
