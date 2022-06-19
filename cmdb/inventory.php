@@ -28,7 +28,7 @@
                 echo "
                     <tr>
                         <td><a href='" . inventoryURL($row['ID']) . "'>" . $row["Label"] . "<br><span class='text-muted small pt-2 ps-1'>" . $row['ID'] . "</span></a></td>
-                        <td>" . $row["Desc"] . "</td>
+                        <td>" . $row["Description"] . "</td>
                         <td>" . searchByLabel("LowIP", $row['SysTags'])['Values'][0] . "</td>
                         <td>" . searchByLabel("HighIP", $row['SysTags'])['Values'][0] . "</td>
                     </tr>
@@ -102,7 +102,7 @@
                 echo "
                     <tr>
                     <td><a href='" . inventoryURL($row['ID']) . "'>" . $row["Label"] . "<br><span class='text-muted small pt-2 ps-1'>" . $row['ID'] . "</span></a></td>
-                        <td>" . $row["Desc"] . "</td>
+                        <td>" . $row["Description"] . "</td>
                         <td>" . $row["OSILayer"] . "</td>
                         <td>" . searchByLabel("IP", $row['SysTags'])['Values'][0] . "<br><span class='text-muted small pt-2 ps-1'>" . searchByLabel("MAC", $row['SysTags'])['Values'][0] . "</span></a></td>
                     </tr>
@@ -140,7 +140,7 @@
                 echo "
                     <tr>
                     <td><a href='" . inventoryURL($row['ID']) . "'>" . $row["Label"] . "<br><span class='text-muted small pt-2 ps-1'>" . $row['ID'] . "</span></a></td>
-                        <td>" . $row["Desc"] . "</td>
+                        <td>" . $row["Description"] . "</td>
                         <td>" . $row["OSILayer"] . "</td>
                         <td>" . searchByLabel("IP", $row['SysTags'])['Values'][0] . "<br><span class='text-muted small pt-2 ps-1'>" . searchByLabel("MAC", $row['SysTags'])['Values'][0] . "</span></a></td>
                     </tr>
@@ -169,7 +169,7 @@
           type: "POST",
           data: {
             "Label": label,
-            "Desc": desc,
+            "Description": desc,
             "HighIP": highIP,
             "LowIP": lowIP,
             "CMDBType": "0",

@@ -28,7 +28,7 @@ $json = $json[0];
                                     <?php echo $json["Label"]; ?>
                                 </h6>
                                 <span class="text-muted small pt-2 ps-1">
-                                    <?php echo $json["Desc"]; ?>
+                                    <?php echo $json["Description"]; ?>
                                 </span>
                             </div>
                         </div>
@@ -150,7 +150,7 @@ $json = $json[0];
                 {
                     echo "
                         <td>" . $tag["Label"] . "</td>
-                        <td>" . $tag["Desc"] . "</td>
+                        <td>" . $tag["Description"] . "</td>
                         <td>" . dataType($tag["DataType"]) . "</td>";
                     echo "</ul></td> 
                         <td>";
@@ -221,12 +221,12 @@ if ($json["CMDBType"] == 0)
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="ac-cap-' . $count . '">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ac-cap-itm-' . $count . '" aria-expanded="false" aria-controls="ac-cap-itm-' . $count . '">
-                            ' . $cap["Name"] . ' 
+                            ' . $cap["Label"] . ' 
                             </button>
                         </h2>
                         <div id="ac-cap-itm-' . $count . '" class="accordion-collapse collapse" aria-labelledby="ac-cap-' . $count . '" data-bs-parent="#capability-accordion">
                             <div class="accordion-body">
-                                <p>' . $cap["Desc"] . '</p>
+                                <p>' . $cap["Description"] . '</p>
                                 <div class="d-grid gap-2 mt-3">
                                     <button class="btn btn-sm btn-primary run-capability" type="button" data-capability-id="' . $cap['ID'] . '" data-cmdb-id="' . $id . '">Launch</button>
                                 </div>
@@ -264,7 +264,7 @@ if ($json["CMDBType"] == 0)
                         </h2>
                         <div id="ac-cook-itm-' . $count . '" class="accordion-collapse collapse" aria-labelledby="ac-cook-' . $count . '" data-bs-parent="#cookbook-accordion">
                             <div class="accordion-body">
-                                <p>' . $cook["Desc"] . '</p>
+                                <p>' . $cook["Description"] . '</p>
                                 <div class="d-grid gap-2 mt-3">
                                     <button class="btn btn-sm btn-primary run-cookbook" type="button" data-cookbook-id="' . $cook['CCBI'] . '" data-cmdb-id="' . $id . '">Launch</button>
                                 </div>
