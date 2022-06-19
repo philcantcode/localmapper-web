@@ -12,10 +12,10 @@
         <div class="mb-2"><button id="syssettings" type="button" class="btn btn-danger">Execute</button> | Restore to system settings</div>
         <hr></hr>
         
-        <h5 class="card-title">Database Settings</h5>
-        <div class="mb-2"><button id="caps" type="button" class="btn btn-danger">Execute</button> | Drop Capabilities Database</div>
-        <div class="mb-2"><button id="cmdb" type="button" class="btn btn-danger">Execute</button> | Drop all CMDB Databases</div>
-        <div class="mb-2"><button id="cookbook" type="button" class="btn btn-danger">Execute</button> | Drop Cookbooks Database</div>
+        <h5 class="card-title">Database Restore</h5>
+        <div class="mb-2"><button id="caps" type="button" class="btn btn-danger">Execute</button> | Restore Capabilities Database</div>
+        <div class="mb-2"><button id="cmdb" type="button" class="btn btn-danger">Execute</button> | Restore all CMDB & Propositions Databases</div>
+        <div class="mb-2"><button id="cookbook" type="button" class="btn btn-danger">Execute</button> | Restore Cookbooks Database</div>
         <hr></hr>
 
         <h5 class="card-title">Initialise Settings</h5>
