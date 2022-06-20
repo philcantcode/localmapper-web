@@ -150,7 +150,7 @@
                     echo "
                         <tr>
                         <td>" . $count++ . "</td>
-                        <td>" . $adapter["Name"] . "</td>
+                        <td>" . $adapter["Label"] . "</td>
                         <td>" . $adapter["IP"] . "<br><span class='text-muted small pt-2 ps-1'>" . $adapter['MAC'] . "</span></td>
                         <td></td>
                         <td></td>
