@@ -19,7 +19,7 @@
           <div class='card'>
             <div class='card-body'>
               <h5 class='card-title'>Proposition #" . $prop["ID"] . " - " . $prop["DateTime"] . "</h5>
-              <p>" . $prop["Desc"] . "</p>
+              <p>" . $prop["Description"] . "</p>
       
               <div class='d-flex align-items-start'>
                 <div class='nav flex-column nav-pills me-3' id='prop-tab-" . $prop["ID"] . "' role='tablist' aria-orientation='vertical'>
