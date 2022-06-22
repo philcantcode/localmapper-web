@@ -9,6 +9,7 @@ $dtGraph = loadJSON("/cmdb/utils/date-time-graph/get/" . $id, true);
 $json = $json[0];
 
 ?>
+
 <div class="row section dashboard">
     <div class="col-12">
         <div class="row">
@@ -151,7 +152,7 @@ $json = $json[0];
                     echo "
                         <td>" . $tag["Label"] . "</td>
                         <td>" . $tag["Description"] . "</td>
-                        <td>" . dataType($tag["DataType"]) . "</td>";
+                        <td>" . $tag["DataType"] . "</td>";
                     echo "</ul></td> 
                         <td>";
                             foreach ($tag["Values"] as $val)
