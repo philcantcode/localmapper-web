@@ -206,7 +206,7 @@ if ($json["CMDBType"] == 0)
 }
 ?>
 <div class="row">
-    <div class="col-6">
+    <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Execute Capabilities</h5>
@@ -227,8 +227,56 @@ if ($json["CMDBType"] == 0)
                         </h2>
                         <div id="ac-cap-itm-' . $count . '" class="accordion-collapse collapse" aria-labelledby="ac-cap-' . $count . '" data-bs-parent="#capability-accordion">
                             <div class="accordion-body">
-                                <p>' . $cap["Description"] . '</p>
-                                <div class="d-grid gap-2 mt-3">
+                                <p><b>' . $cap["Description"] . '</b></p>';
+
+                            foreach ($cap["Command"]["Params"] as $param)
+                            {
+                                if ($param["Options"] != null) 
+                                {
+                                    echo "<p class='mt-3'><span class='badge bg-success'>Option</span> Please select one of the following " . $param["Description"] . "</p>";
+
+                                    echo '
+                                    <table class="table datatable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Label</a></th>
+                                            <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Value</a></th>
+                                            <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">File Size</a></th>
+                                            <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Risk Level</a></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';    
+
+                                    $count = 0;
+                                    foreach ($param["Options"] as $opt)
+                                    {
+                                        echo "<tr class='small'>";
+
+                                        echo '
+                                            <td class="opt-id" name="' . $count . '">
+                                                <div class="form-check">
+                                                    <input class="form-check-input param-opt" type="radio" name="' . $param["Flag"] . '" id="' . $param["Flag"] . $count . '">
+                                                    <label class="form-check-label" for="' . $param["Flag"] . $count . '">'
+                                                    . $opt["Label"] .
+                                                    '</label>
+                                                </div>
+                                            </td>
+                                            <td>' . $opt["Value"] . '</td>
+                                            <td>' . $opt["FileSize"] . '</td>
+                                            <td>' . $opt["RiskLevel"] .'</td>
+                                        ';
+
+                                        echo "</tr>";
+
+                                        $count++;
+                                    }
+                                    echo '</tbody>
+                                </table>
+                                    ';
+                                }
+                            }
+
+                            echo '<div class="d-grid gap-2 mt-3">
                                     <button class="btn btn-sm btn-primary run-capability" type="button" data-capability-id="' . $cap['ID'] . '" data-cmdb-id="' . $id . '">Launch</button>
                                 </div>
                             </div>
@@ -244,7 +292,7 @@ if ($json["CMDBType"] == 0)
         </div>  
     </div>
 
-    <div class="col-6">
+    <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Execute Cookbooks</h5>
@@ -291,10 +339,29 @@ if ($json["CMDBType"] == 0)
             var capID = $(this).attr("data-capability-id");
             var cmdbID = $(this).attr("data-cmdb-id");
 
+            var options = {};
+
+            $(this).closest(".accordion-item").find(".param-opt").each(function()
+            {
+                $flag = $(this).attr("name");
+                $optID = $(this).closest("tr").find(".opt-id").attr("name");
+                $isChecked = $(this).is(':checked');
+
+                console.log("Flag: " + $flag);
+                console.log("OptID: " + $optID)
+                console.log("IsChecked: " + $isChecked)
+
+                if ($isChecked)
+                {
+                    options[$flag] = $optID;
+                }
+            });
+
             $.ajax(
             {
                 url: "<?php echo $GLOBALS['api']; ?>" + "/capability/run/cmdb-compatible/" + cmdbID + "/" + capID,
                 type: "POST",
+                data: options,
                 success: function (response) {
                     console.log(response);
                 }
