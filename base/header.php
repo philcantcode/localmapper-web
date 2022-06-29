@@ -287,7 +287,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/health.php">
+        <a class="nav-link collapsed" href="/jobs.php">
           <i class="bi bi-grid"></i>
           <span>Running Jobs</span>
         </a>
