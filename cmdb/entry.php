@@ -130,42 +130,94 @@ $json = $json[0];
 
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">System Tags</h5>
-        <p>This list of tags is system managed and cannot be edited by the user.</p>
-        <table class="table datatable">
-            <thead>
-                <tr>
-                    <th scope="col" data-sortable="" style="width: 5.50459%;"><a href="#"
-                            class="dataTable-sorter">Label</a></th>
-                    <th scope="col" data-sortable="" style="width: 18.1651%;"><a href="#"
-                            class="dataTable-sorter">Description</a></th>
-                    <th scope="col" data-sortable="" style="width: 57.156%;"><a href="#" class="dataTable-sorter">Data
-                            Type</a></th>
-                    <th scope="col" data-sortable="" style="width: 19.63303%;"><a href="#"
-                            class="dataTable-sorter">Values</a></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                foreach($json["SysTags"] as $tag)
-                {
-                    echo "
-                        <td>" . $tag["Label"] . "</td>
-                        <td>" . $tag["Description"] . "</td>
-                        <td>" . $tag["DataType"] . "</td>";
-                    echo "</ul></td> 
-                        <td>";
-                            foreach ($tag["Values"] as $val)
-                            {
-                                echo "<li>" . $val . "</li>";
-                            }
-                        echo "</td>
+        <h5 class="card-title">Metadata & Logs</h5>
+        
+        <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="systags-tab" data-bs-toggle="tab" data-bs-target="#bordered-systags" type="button" role="tab" aria-controls="systags" aria-selected="true">System Tags</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="logs-tab" data-bs-toggle="tab" data-bs-target="#bordered-logs" type="button" role="tab" aria-controls="logs" aria-selected="false">Logs</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+            </li>
+        </ul>
+
+        <div class="tab-content pt-2" id="borderedTabContent">
+            <div class="tab-pane fade show active" id="bordered-systags" role="tabpanel" aria-labelledby="systags-tab">
+                <p>This list of tags is system managed and cannot be edited by the user.</p>
+                <table class="table datatable">
+                    <thead>
+                        <tr>
+                            <th scope="col" data-sortable="" style="width: 5.50459%;"><a href="#"
+                                    class="dataTable-sorter">Label</a></th>
+                            <th scope="col" data-sortable="" style="width: 18.1651%;"><a href="#"
+                                    class="dataTable-sorter">Description</a></th>
+                            <th scope="col" data-sortable="" style="width: 57.156%;"><a href="#" class="dataTable-sorter">Data
+                                    Type</a></th>
+                            <th scope="col" data-sortable="" style="width: 19.63303%;"><a href="#"
+                                    class="dataTable-sorter">Values</a></th>
                         </tr>
-                    ";
-                }
-            ?>
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        foreach($json["SysTags"] as $tag)
+                        {
+                            echo "
+                                <td>" . $tag["Label"] . "</td>
+                                <td>" . $tag["Description"] . "</td>
+                                <td>" . $tag["DataType"] . "</td>";
+                            echo "</ul></td> 
+                                <td>";
+                                    foreach ($tag["Values"] as $val)
+                                    {
+                                        echo "<li>" . $val . "</li>";
+                                    }
+                                echo "</td>
+                                </tr>
+                            ";
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="bordered-logs" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Load associated logs</h5>
+                                <form>
+                                    <button id="nmap-logs" class="btn btn-sm btn-primary" type="button">Load NMAP Logs</button>
+                                    <button id="all-logs" class="btn btn-sm btn-primary" type="button">Load All Logs</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Results</h5>
+                                <table class="table datatable small">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Result</a></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="log-results">
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="bordered-contact" role="tabpanel" aria-labelledby="contact-tab">
+            Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+            </div>
+        </div>
     </div>
 </div>
 
@@ -206,7 +258,7 @@ if ($json["CMDBType"] == 0)
 }
 ?>
 <div class="row">
-    <div class="col-12">
+    <div class="col-6">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Execute Capabilities</h5>
@@ -222,8 +274,16 @@ if ($json["CMDBType"] == 0)
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="ac-cap-' . $count . '">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ac-cap-itm-' . $count . '" aria-expanded="false" aria-controls="ac-cap-itm-' . $count . '">
-                            ' . $cap["Label"] . ' 
-                            </button>
+                            ';
+
+                            if ($cap["Category"] == "DISCOVERY") {
+                                echo $cap["Label"];
+                            }
+                            else {
+                                echo $cap["Label"] . '<span style="margin-left:10px;" class="badge bg-danger">' . $cap["Category"] . '</span>';
+                            }
+
+                            echo '</button>
                         </h2>
                         <div id="ac-cap-itm-' . $count . '" class="accordion-collapse collapse" aria-labelledby="ac-cap-' . $count . '" data-bs-parent="#capability-accordion">
                             <div class="accordion-body">
@@ -292,7 +352,7 @@ if ($json["CMDBType"] == 0)
         </div>  
     </div>
 
-    <div class="col-12">
+    <div class="col-6">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Execute Cookbooks</h5>
@@ -374,6 +434,17 @@ if ($json["CMDBType"] == 0)
 
             console.log("Running /cookbook/run/" + cookID + "/" + cmdbID);
 
+            $.ajax(
+            {
+                url: "<?php echo $GLOBALS['api']; ?>" + "/cookbook/run/" + cookID + "/" + cmdbID,
+                type: "POST",
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        });
+
+        $("#nmap-logs").click(function () {
             $.ajax(
             {
                 url: "<?php echo $GLOBALS['api']; ?>" + "/cookbook/run/" + cookID + "/" + cmdbID,

@@ -12,13 +12,13 @@
                     <p>These devices are pending input to the CMDB. They were discovered as a result of a scan. Please approve or deny them.</p>
 
                     <!-- Table with stripped rows -->
-                    <table class="table datatable">
+                    <table class="table datatable" style="table-layout: fixed; word-wrap: break-word;">
                         <thead>
                             <tr>
-                                <th scope="col" data-sortable="" style="width: 30%;"><a href="#" class="dataTable-sorter">Label / ID</a></th>
-                                <th scope="col" data-sortable="" style="width: 20%;"><a href="#" class="dataTable-sorter">Date Seen</a></th>
-                                <th scope="col" data-sortable="" style="width: 60%;"><a href="#" class="dataTable-sorter">Features</a></th>
-                                <th scope="col" data-sortable="" style="width: 60%;"><a href="#" class="dataTable-sorter">Actions</a></th>
+                                <th scope="col" data-sortable=""><a href="#" style="width:25%" class="dataTable-sorter">Label / ID</a></th>
+                                <th scope="col" data-sortable=""><a href="#" style="width:15%" class="dataTable-sorter">Date Seen</a></th>
+                                <th scope="col" data-sortable=""><a href="#" style="width:25%" class="dataTable-sorter">Features</a></th>
+                                <th scope="col" data-sortable=""><a href="#" style="width:15%" class="dataTable-sorter">Actions</a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,7 +36,7 @@
                                     <td><ul>";
 
 
-                                    foreach ($row["DateSeen"] as $date)
+                                    foreach (array_slice($row["DateSeen"], -3) as $date)
                                     {
                                         echo "<li>" . $date . "</li>";
                                     }
@@ -47,7 +47,7 @@
                                         {
                                             foreach ($tag["Values"] as $value)
                                             {
-                                                echo "<span class='badge bg-primary'>" . $value . "</span><br>";
+                                                echo "<span class='badge mx-1 bg-primary'>" . $value . "</span>";
                                             }
                                         }
                                     echo "</td>

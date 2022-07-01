@@ -273,7 +273,7 @@
     <li class="nav-heading">System</li>
 
       <li class="nav-item">
-        <a class="nav-link " href="index.php">
+        <a class="nav-link collapsed" href="index.php">
           <i class="bi bi-grid"></i>
           <span>Overview</span>
         </a>
