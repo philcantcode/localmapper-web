@@ -199,14 +199,16 @@ $json = $json[0];
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Results</h5>
-                                <table class="table datatable small">
+                                <table id="log-table" class="table datatable small">
                                     <thead>
                                         <tr>
                                             <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Result</a></th>
                                         </tr>
                                     </thead>
                                     <tbody id="log-results">
-                                    
+                                        <tr><td>aaaa</td></tr>
+                                        <tr><td>bbbb</td></tr>
+                                        <tr><td>cccc</td></tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -392,9 +394,10 @@ if ($json["CMDBType"] == 0)
 </div>
 
 
-<script type="text/javascript">
+<script type="text/javascript">    
+    $(window).on("load", function() {
+        logTable = new simpleDatatables.DataTable("#log-table");
 
-    $(document).ready(function () {
         $(".run-capability").click(function () {
             var capID = $(this).attr("data-capability-id");
             var cmdbID = $(this).attr("data-cmdb-id");
@@ -444,13 +447,37 @@ if ($json["CMDBType"] == 0)
             });
         });
 
-        $("#nmap-logs").click(function () {
-            $.ajax(
-            {
-                url: "<?php echo $GLOBALS['api']; ?>" + "/cookbook/run/" + cookID + "/" + cmdbID,
+        $("#nmap-logs").click(function () {  
+
+            // filter = [{"aaaa": "bbbb"}, {"ccccc": "dddd"}];
+
+            // var jsonArg1 = new Object();
+            // jsonArg1.name = 'aaaaa';
+            // jsonArg1.value = 'bbbbb';
+
+            //$("#log-resuts > tr").remove();
+
+            $.ajax({
+                url: "<?php echo $GLOBALS['api']; ?>" + "/tools/nmap/select-logs",
                 type: "POST",
+                data: { // must be arrays
+                    "filter": `[{"args": "nmap -sn --system-dns -oX - 192.168.0.102"}]`, //JSON.stringify(Array.from(filter))],
+                    "projection": "",
+                },
                 success: function (response) {
+                    response = JSON.parse(response);
                     console.log(response);
+
+                    logTable.clear();
+
+                    // Loop the json array results
+                    for(let i = 0; i < response.length; i++) 
+                    {
+                        row = [];
+                        row.push(JSON.stringify(response[i], null, '\t'));
+
+                        logTable.rows().add(row);
+                    }
                 }
             });
         });
