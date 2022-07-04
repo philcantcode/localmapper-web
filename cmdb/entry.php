@@ -147,7 +147,7 @@ $json = $json[0];
         <div class="tab-content pt-2" id="borderedTabContent">
             <div class="tab-pane fade show active" id="bordered-systags" role="tabpanel" aria-labelledby="systags-tab">
                 <p>This list of tags is system managed and cannot be edited by the user.</p>
-                <table class="table datatable">
+                <table id="systags-table" class="table datatable">
                     <thead>
                         <tr>
                             <th scope="col" data-sortable="" style="width: 5.50459%;"><a href="#"
@@ -189,8 +189,8 @@ $json = $json[0];
                             <div class="card-body">
                                 <h5 class="card-title">Load associated logs</h5>
                                 <form>
-                                    <button id="nmap-logs" class="btn btn-sm btn-primary" type="button">Load NMAP Logs</button>
-                                    <button id="all-logs" class="btn btn-sm btn-primary" type="button">Load All Logs</button>
+                                    <button id="nmap-logs" class="btn btn-sm btn-primary mt-1" type="button">Load NMAP Logs</button>
+                                    <button id="all-logs" class="btn btn-sm btn-primary mt-1" type="button">Load All Logs</button>
                                 </form>
                             </div>
                         </div>
@@ -206,9 +206,7 @@ $json = $json[0];
                                         </tr>
                                     </thead>
                                     <tbody id="log-results">
-                                        <tr><td>aaaa</td></tr>
-                                        <tr><td>bbbb</td></tr>
-                                        <tr><td>cccc</td></tr>
+      
                                     </tbody>
                                 </table>
                             </div>
@@ -397,6 +395,7 @@ if ($json["CMDBType"] == 0)
 <script type="text/javascript">    
     $(window).on("load", function() {
         logTable = new simpleDatatables.DataTable("#log-table");
+        systagsTable = new simpleDatatables.DataTable("#systags-table");
 
         $(".run-capability").click(function () {
             var capID = $(this).attr("data-capability-id");
@@ -447,41 +446,51 @@ if ($json["CMDBType"] == 0)
             });
         });
 
-        $("#nmap-logs").click(function () {  
-
-            // filter = [{"aaaa": "bbbb"}, {"ccccc": "dddd"}];
-
-            // var jsonArg1 = new Object();
-            // jsonArg1.name = 'aaaaa';
-            // jsonArg1.value = 'bbbbb';
-
-            //$("#log-resuts > tr").remove();
-
-            $.ajax({
-                url: "<?php echo $GLOBALS['api']; ?>" + "/tools/nmap/select-logs",
-                type: "POST",
-                data: { // must be arrays
-                    "filter": `[{"args": "nmap -sn --system-dns -oX - 192.168.0.102"}]`, //JSON.stringify(Array.from(filter))],
-                    "projection": "",
-                },
-                success: function (response) {
-                    response = JSON.parse(response);
-                    console.log(response);
-
-                    logTable.clear();
-
-                    // Loop the json array results
-                    for(let i = 0; i < response.length; i++) 
-                    {
-                        row = [];
-                        row.push(JSON.stringify(response[i], null, '\t'));
-
-                        logTable.rows().add(row);
-                    }
-                }
-            });
+        $("#nmap-logs").click(function () 
+        {
+            loadNmapLogs(`[{"hosts.addresses.addr": "<?php echo searchByLabel('IP', $json['SysTags'])['Values'][0]; ?>"}]`, `[{}]`);
         });
+
+        $("#all-logs").click(function () 
+        {
+            loadNmapLogs(`[{}]`, `[{}]`);
+        });
+            
     });
+
+/*
+    `[{"args": "nmap -sn --system-dns -oX - 192.168.1.110"}]` //JSON.stringify(Array.from(filter))],
+*/
+function loadNmapLogs(filter, projection)
+{
+    $.ajax({
+        url: "<?php echo $GLOBALS['api']; ?>" + "/tools/nmap/select-logs",
+        type: "POST",
+        data: { // must be arrays
+            "filter": filter, 
+            "projection": projection,
+        },
+        success: function (response) {
+            response = JSON.parse(response);
+
+            // Clear existing table results
+            while (logTable.data.length != 0)
+            {
+                console.log(logTable.data.length); // Current num tables
+                logTable.rows().remove();
+            }
+
+            // Loop the json array results
+            for(let i = 0; i < response.length; i++) 
+            {
+                row = [];
+                row.push(JSON.stringify(response[i], null, '\t'));
+
+                logTable.rows().add(row);
+            }
+        }
+    });
+}
 </script>
 
 <?php foot(); ?>

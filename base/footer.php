@@ -29,7 +29,6 @@
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
 <script src="/assets/vendor/FlexiJsonEditor/jquery.jsoneditor.js"></script>
-<script>$.holdReady(false);</script>
 </body>
 
 </html>

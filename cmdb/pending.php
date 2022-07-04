@@ -12,7 +12,7 @@
                     <p>These devices are pending input to the CMDB. They were discovered as a result of a scan. Please approve or deny them.</p>
 
                     <!-- Table with stripped rows -->
-                    <table class="table datatable" style="table-layout: fixed; word-wrap: break-word;">
+                    <table id="pending-devices-table" class="table datatable" style="table-layout: fixed; word-wrap: break-word;">
                         <thead>
                             <tr>
                                 <th scope="col" data-sortable=""><a href="#" style="width:25%" class="dataTable-sorter">Label / ID</a></th>
@@ -74,6 +74,11 @@
 </section>
 
 <script type="text/javascript">
+  $(window).on("load", function() 
+  {
+        pendingTable = new simpleDatatables.DataTable("#pending-devices-table");
+  });
+  
   $(document).ready(function () {
     $(".approve-pending").click(function () 
     {

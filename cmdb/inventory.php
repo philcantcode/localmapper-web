@@ -9,7 +9,7 @@
       <div class="card-body">
         <h5 class="card-title">VLAN Definitions</h5>
         <p>Use this table to define the VLANs on your network.</p>
-        <table class="table datatable">
+        <table id="vlan-table" class="table datatable">
           <thead>
             <tr>
               <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Label / ID</a></th>
@@ -84,7 +84,7 @@
       <div class="card-body">
         <h5 class="card-title">Server Database</h5>
         <p>This table displays all servers stored in the CMDB.</p>
-        <table class="table datatable">
+        <table id="server-table" class="table datatable">
           <thead>
             <tr>
               <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Label / ID</a></th>
@@ -122,7 +122,7 @@
       <div class="card-body">
         <h5 class="card-title">Unclassified Devices</h5>
         <p>This table displays all of the unclassified devices (by type) in the CMDB.</p>
-        <table class="table datatable">
+        <table id="unclassified-devices-table" class="table datatable">
           <thead>
             <tr>
               <th scope="col" data-sortable=""><a href="#" class="dataTable-sorter">Label / ID</a></th>
@@ -156,6 +156,12 @@
 
 
 <script type="text/javascript">
+  $(window).on("load", function() {
+        vlanTable = new simpleDatatables.DataTable("#vlan-table");
+        unclassifiedTable = new simpleDatatables.DataTable("#unclassified-devices-table");
+        serverTable = new simpleDatatables.DataTable("#server-table");
+  });
+
   $(document).ready(function () {
     $("#create-vlan").click(function () {
       var label = $("#create-vlan-label").val();
