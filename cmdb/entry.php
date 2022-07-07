@@ -484,10 +484,12 @@ function loadNmapLogs(filter, projection)
             for(let i = 0; i < response.length; i++) 
             {
                 row = [];
-                row.push(JSON.stringify(response[i], null, '\t'));
+                row.push(JSON.stringify(response[i]));
 
                 logTable.rows().add(row);
             }
+
+            logTable.refresh();
         }
     });
 }
