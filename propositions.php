@@ -18,7 +18,7 @@
       <div class='row'>
           <div class='card'>
             <div class='card-body'>
-              <h5 class='card-title'>Proposition #" . $prop["ID"] . " - " . $prop["DateTime"] . "</h5>
+              <h5 class='card-title'>Proposition #" . substr($prop["ID"], -6) . " - " . $prop["DateTime"] . "</h5>
               <p>" . $prop["Description"] . "</p>
       
               <div class='d-flex align-items-start'>
