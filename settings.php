@@ -27,9 +27,9 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function () 
+  $(window).on("load", function()
   {
-    $("#caps").click(function () 
+    $("#caps").on("click", function () 
     {
       $.ajax(
         {
@@ -41,7 +41,7 @@
         });
     });
 
-    $("#cmdb").click(function () 
+    $("#cmdb").on("click", function () 
     {
       $.ajax(
         {
@@ -53,7 +53,7 @@
         });
     });
 
-    $("#syssettings").click(function () 
+    $("#syssettings").on("click", function () 
     {
       $.ajax(
         {
@@ -65,7 +65,7 @@
         });
     });
 
-    $("#factoryreset").click(function () 
+    $("#factoryreset").on("click", function () 
     {
       $.ajax(
         {
@@ -77,7 +77,7 @@
         });
     });
 
-    $("#cookbook").click(function () 
+    $("#cookbook").on("click", function () 
     {
       $.ajax(
         {

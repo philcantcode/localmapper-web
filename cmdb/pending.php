@@ -76,11 +76,9 @@
 <script type="text/javascript">
   $(window).on("load", function() 
   {
-        pendingTable = new simpleDatatables.DataTable("#pending-devices-table");
-  });
-  
-  $(document).ready(function () {
-    $(".approve-pending").click(function () 
+    pendingTable = new simpleDatatables.DataTable("#pending-devices-table");
+
+    $(".approve-pending").on("click", function () 
     {
         var id = $(this).attr("data-entry-id");
         console.log(".approve-penidng: " + id);
@@ -100,7 +98,7 @@
         });
     });
 
-    $(".deny-pending").click(function () 
+    $(".deny-pending").on("click", function () 
     {
         var id = $(this).attr("data-entry-id");
         console.log(".deny-penidng: " + id);
@@ -118,7 +116,7 @@
         });
     });
 
-    $("#deny-all-pending").click(function () 
+    $("#deny-all-pending").on("click", function () 
     {
         console.log("#deny-all-penidng");
 

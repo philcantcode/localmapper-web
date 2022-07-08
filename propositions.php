@@ -72,9 +72,9 @@
 
 <script type="text/javascript">
 
-$( document ).ready(function() 
+$(window).on("load", function()
 {
-    $(".prop-accept-default-btn").click(function() 
+    $(".prop-accept-default-btn").on("click", function() 
     {
         var propID = $(this).attr("data-propID");
 
