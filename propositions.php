@@ -5,15 +5,13 @@
   // curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
   // curl_exec($ch);
 
+  file_get_contents($GLOBALS['server'] . "/propositions/refresh");
+
   $json = file_get_contents($GLOBALS['server'] . "/propositions/get-all");
   $json = json_decode($json, true);
 
   foreach ($json as $prop)
-  {
-      if ($prop["Status"] != 0) {
-          continue;
-      }
-      
+  {     
       echo "
       <div class='row'>
           <div class='card'>
@@ -29,37 +27,34 @@
                 <div class='tab-content w-100' id='prop-info-content-" . $prop["ID"] . "'>
                   <div class='tab-pane fade show active' id='v-pills-home' role='tabpanel' aria-labelledby='prop-info-tab-" . $prop["ID"] . "'>
                       <div class='input-group mb-3'>
-                        <span class='input-group-text'>" . $prop["Predicate"]["Label"] . "</span>
-                        <input type='text' class='form-control' id='basic-url' value='" . $prop["Predicate"]["Value"] . "'>
-                      </div>
-     
-                      <div class='row'>
-                        <div class='col-12'>
-                        <input type='button' class='prop-accept-default-btn btn btn-success float-right' value='Accept Default' data-propID='" . $prop["ID"] . "'></input>
-                      </div>
+                        <span class='input-group-text'>" . $prop["Predicates"][0]["Label"] . "</span>
+                        <input type='text' class='form-control' id='basic-url' value='" . $prop["Predicates"][0]["Value"] . "'>
+                        <input type='button' class='prop-accept-default-btn btn btn-success float-right' value='Accept Default' data-propID='" . $prop["ID"] . "' data-propValue='0'></input>
                       </div>
                   </div>
                   <div class='tab-pane fade' id='prop-override-content-" . $prop["ID"] . "' role='tabpanel' aria-labelledby='prop-override-tab-" . $prop["ID"] . "'>
                     <p>Our best guess is that it's one of these values:</p>
                     <div class='input-group mb-3'>
-                      <span class='input-group-text'>" . $prop["Predicate"]["Label"] . "</span>
+                      <span class='input-group-text'>" . $prop["Predicates"][1]["Label"] . "</span>
                       <select class='form-select' aria-label='Default select example'>";
                       
-                      foreach ($prop["Predicate"]["Options"] as $option)
+                      $count = 0;
+                      foreach ($prop["Predicates"] as $option)
                       {
-                          echo "<option value='" . $option . "'>" . $option . "</option>";
+                          echo "<option value='" . $count . "'>" . $option["Value"] . "</option>";
+                          $count++;
                       }
                       
                       echo "
                       </select>
-                      <input type='button' class='btn btn-success float-right' value='Update'></input>
+                      <input type='button' data-propID='" . $prop["ID"] . "' class='btn btn-success float-right alt-select' value='Select'></input>
                     </div>
 
                     <p>Alternatively, input your own value (make sure it's of the same data type):</p>
                     <div class='input-group mb-3'>
-                      <span class='input-group-text'>" . $prop["Predicate"]["Label"] . "</span>
+                      <span class='input-group-text'>" . $prop["Predicates"][1]["Label"] . "</span>
                       <input type='text' class='form-control' id='basic-url'>
-                      <input type='button' class='btn btn-success float-right' value='Update'></input>
+                      <input type='button' class='btn btn-success float-right' value='Select'></input>
                     </div>
                   </div>
                 </div>
@@ -77,13 +72,35 @@ $(window).on("load", function()
     $(".prop-accept-default-btn").on("click", function() 
     {
         var propID = $(this).attr("data-propID");
+        var propValue = $(this).attr("data-propValue");
 
         $.ajax(
         {
-            url: "<?php echo $GLOBALS['api']; ?>" + "/propositions/accept-defaults",
+            url: "<?php echo $GLOBALS['api']; ?>" + "/propositions/resolve",
             type: "POST",
             data: {
               ID: propID,
+              Value: propValue,
+            },
+            success: function(response) 
+            {
+                console.log(response);
+            }
+        });
+    });
+
+    $(".alt-select").on("click", function() 
+    {
+        var propID = $(this).attr("data-propID");
+        var propValue = $(this).parent('div').find(':selected').val();
+
+        $.ajax(
+        {
+            url: "<?php echo $GLOBALS['api']; ?>" + "/propositions/resolve",
+            type: "POST",
+            data: {
+              ID: propID,
+              Value: propValue,
             },
             success: function(response) 
             {
