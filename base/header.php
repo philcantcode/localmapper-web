@@ -1,3 +1,10 @@
+<?php 
+    $propCount = file_get_contents($GLOBALS['server'] . "/propositions/get-count");
+    
+    $jobStats = file_get_contents($GLOBALS['server'] . "/capability/jobs/get-stats");
+    $jobStats = json_decode($jobStats, true);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -289,14 +296,25 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="/jobs.php">
           <i class="bi bi-grid"></i>
-          <span>Running Jobs</span>
+          <?php
+            echo "<span>Running Jobs</span>
+                  <span class='badge mx-1 bg-success' data-toggle='tooltip' data-placement='top' title='Actively running jobs'>" . $jobStats["Running"] . "</span>
+                  <span class='badge mx-1 bg-warning' data-toggle='tooltip' data-placement='top' title='Waiting jobs'>" . $jobStats["Waiting"] . "</span>";
+          ?>
         </a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="/propositions.php">
           <i class="bi bi-grid"></i>
-          <span>Propositions</span>
+          <?php
+          if ($propCount > 0) {
+            echo "<span>Propositions</span><span class='badge mx-1 bg-danger'>" . $propCount . "</span>";
+          }
+          else {
+            echo "<span>Propositions</span>";
+          }
+          ?>
         </a>
       </li>
 

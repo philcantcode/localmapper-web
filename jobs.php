@@ -6,7 +6,7 @@
 ?>
 
 <div class="row">
-    <div class="col-8">
+    <div class="col-8" style="padding-left:0">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Running Jobs</h5>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="col-4">
-        <div class="card">
+        <div class="card" style="padding-right:0">
             <div class="card-body">
                 <h5 class="card-title">Job Types</h5>
                 <div id="pieChart" style="min-height: 300px;" class="echart"></div>

@@ -29,7 +29,7 @@
                       <div class='input-group mb-3'>
                         <span class='input-group-text'>" . $prop["Predicates"][0]["Label"] . "</span>
                         <input type='text' class='form-control' id='basic-url' value='" . $prop["Predicates"][0]["Value"] . "'>
-                        <input type='button' class='prop-accept-default-btn btn btn-success float-right' value='Accept Default' data-propID='" . $prop["ID"] . "' data-propValue='0'></input>
+                        <input type='button' class='prop-accept-default-btn btn btn-success float-right' value='Accept Default' data-propID='" . $prop["ID"] . "' data-propValue='0' data-propType='" . $prop["Type"] . "'></input>
                       </div>
                   </div>
                   <div class='tab-pane fade' id='prop-override-content-" . $prop["ID"] . "' role='tabpanel' aria-labelledby='prop-override-tab-" . $prop["ID"] . "'>
@@ -47,7 +47,7 @@
                       
                       echo "
                       </select>
-                      <input type='button' data-propID='" . $prop["ID"] . "' class='btn btn-success float-right alt-select' value='Select'></input>
+                      <input type='button' data-propID='" . $prop["ID"] . "' data-propType='" . $prop["Type"] . "' class='btn btn-success float-right alt-select' value='Select'></input>
                     </div>
 
                     <p>Alternatively, input your own value (make sure it's of the same data type):</p>
@@ -58,7 +58,20 @@
                     </div>
                   </div>
                 </div>
-              </div>              
+              </div>"; 
+              
+              if ($prop["Evidence"] != null) {
+                  foreach ($prop["Evidence"] as $evidence)
+                  {
+                      echo "<div class='row'>
+                        <hr></hr>
+                        <h5>" . $evidence["Label"] . "</h5>
+                        <p>" . $evidence["Value"] . "</p>
+                      </div>";
+                  }
+              }
+
+            echo "
             </div>
           </div>
       </div>";
@@ -72,11 +85,23 @@ $(window).on("load", function()
     $(".prop-accept-default-btn").on("click", function() 
     {
         var propID = $(this).attr("data-propID");
-        var propValue = $(this).attr("data-propValue");
+        var propValue = $(this).attr("data-propValue"); 
+        var propType = $(this).attr("data-propType");
+        $url = "<?php echo $GLOBALS['api']; ?>";
+
+        if (propType == "LOCAL_IDENTITY")
+        {
+            $url += "/propositions/resolve/local-identity";
+        }
+
+        if (propType == "IP_IDENTITY_CONFLICT")
+        {
+            $url += "/propositions/resolve/ip-conflict";
+        }
 
         $.ajax(
         {
-            url: "<?php echo $GLOBALS['api']; ?>" + "/propositions/resolve",
+            url: $url,
             type: "POST",
             data: {
               ID: propID,
@@ -93,6 +118,7 @@ $(window).on("load", function()
     {
         var propID = $(this).attr("data-propID");
         var propValue = $(this).parent('div').find(':selected').val();
+        var propType = $(this).attr("data-propType");
 
         $.ajax(
         {
