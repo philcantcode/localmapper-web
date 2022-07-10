@@ -67,7 +67,7 @@
                                 <div class="ps-3">
                                     <h6>
                                         <?php
-                                        $json = file_get_contents($GLOBALS['server'] . "/local/get-date-time");
+                                        $json = file_get_contents($GLOBALS['server'] . "/utils/get-date-time");
                                         $json = json_decode($json);
 
                                         echo $json -> {"HHMMSS"};
@@ -75,7 +75,7 @@
                                     </h6>
                                     <span class="text-muted small pt-2 ps-1">   
                                     <?php
-                                        $json = file_get_contents($GLOBALS['server'] . "/local/get-date-time");
+                                        $json = file_get_contents($GLOBALS['server'] . "/utils/get-date-time");
                                         $json = json_decode($json);
 
                                         echo $json -> {"DDMMYYYY"};
