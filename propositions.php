@@ -91,12 +91,12 @@ $(window).on("load", function()
 
         if (propType == "LOCAL_IDENTITY")
         {
-            $url += "/propositions/resolve/local-identity";
+            $url += "/propositions/cmdb/resolve/local-identity";
         }
 
         if (propType == "IP_IDENTITY_CONFLICT")
         {
-            $url += "/propositions/resolve/ip-conflict";
+            $url += "/propositions/cmdb/resolve/ip-conflict";
         }
 
         $.ajax(
@@ -122,7 +122,7 @@ $(window).on("load", function()
 
         $.ajax(
         {
-            url: "<?php echo $GLOBALS['api']; ?>" + "/propositions/resolve",
+            url: "<?php echo $GLOBALS['api']; ?>" + "/propositions/cmdb/resolve",
             type: "POST",
             data: {
               ID: propID,

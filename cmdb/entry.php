@@ -3,8 +3,7 @@ head(tab: "Inventory Entry", pdir: "Inventory");
 $id = $_GET["id"];
 
 $json = loadJSON("/cmdb/get/" . $id, true);
-$identConf = loadJSON("/cmdb/identity-confidence/get/" . $id, true);
-$dtGraph = loadJSON("/cmdb/utils/date-time-graph/get/" . $id, true);  
+$stats = loadJSON("/cmdb/get/stats/" . $id, true);
 
 $json = $json[0];
 
@@ -35,7 +34,7 @@ $json = $json[0];
                         </div>
                         <hr></hr>
 
-                        <p>This is the identity matrix showing the confidence that the system has in tracking the device over time. The average score for this device is <?php echo $identConf["Average"]; ?></p>
+                        <p>This is the identity matrix showing the confidence that the system has in tracking the device over time. The average score for this device is <?php echo $stats["Confidence"]["Average"]; ?></p>
                         
                         <div class="row">
                             <div class="col-md-6 col-sm-12"><canvas id="radarChart" style="max-height: 400px;"></canvas></div>
@@ -58,12 +57,12 @@ $json = $json[0];
                                         datasets: [{
                                             label: 'Device Identity Confidence (%)',
                                             data: [
-                                                <?php echo $identConf["IP"]; ?>,
-                                                <?php echo $identConf["Vendor"]; ?>,
-                                                <?php echo $identConf["HostName"]; ?>,
-                                                <?php echo $identConf["OS"]; ?>,
-                                                <?php echo $identConf["MAC"]; ?>,
-                                                <?php echo $identConf["DateSeen"]; ?>,
+                                                <?php echo $stats["Confidence"]["IP"]; ?>,
+                                                <?php echo $stats["Confidence"]["Vendor"]; ?>,
+                                                <?php echo $stats["Confidence"]["HostName"]; ?>,
+                                                <?php echo $stats["Confidence"]["OS"]; ?>,
+                                                <?php echo $stats["Confidence"]["MAC"]; ?>,
+                                                <?php echo $stats["Confidence"]["DateSeen"]; ?>,
                                             ],
                                             fill: true,
                                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -98,10 +97,10 @@ $json = $json[0];
                                 new Chart(document.querySelector('#lineChart'), {
                                     type: 'line',
                                     data: {
-                                        labels: <?php echo json_encode($dtGraph["Keys"]); ?>,
+                                        labels: <?php echo json_encode($stats["TimeGraph"]["Keys"]); ?>,
                                         datasets: [{
                                             label: 'Dates Observed',
-                                            data: <?php echo json_encode($dtGraph["Values"]); ?>,
+                                            data: <?php echo json_encode($stats["TimeGraph"]["Values"]); ?>,
                                             fill: true,
                                             borderColor: 'rgb(75, 192, 192)',
                                             tension: 0.3,
