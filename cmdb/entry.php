@@ -4,12 +4,44 @@ $id = $_GET["id"];
 
 $json = loadJSON("/cmdb/get/" . $id, true);
 $stats = loadJSON("/cmdb/get/stats/" . $id, true);
+$vulns = loadJSON("/searchsploit/get/entity-vulnerabilities/" . $id, true);
 
 $json = $json[0];
 
 ?>
 
 <div class="row section dashboard">
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+        <div class="card info-card sales-card">
+            <div class="card-body">
+                <h5 class="card-title">Vulnerabilities <span>| Possible Matches</span></h5>
+
+                <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-exclamation-octagon"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6 style="font-size:18px;">
+                            <ul>
+                                <?php
+                                    foreach($vulns as $vuln)
+                                    {
+                                        echo "<li>" . $vuln["SEARCH"] . "</li>";
+                                    }
+
+                                    if (count($vulns) == 0) {
+                                        echo "<li>None</li>";
+                                    }
+                                ?>
+                            </ul>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="col-12">
         <div class="row">
             <div class="col-12">
@@ -139,7 +171,7 @@ $json = $json[0];
                 <button class="nav-link" id="logs-tab" data-bs-toggle="tab" data-bs-target="#bordered-logs" type="button" role="tab" aria-controls="logs" aria-selected="false">Logs</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                <button class="nav-link" id="vulns-tab" data-bs-toggle="tab" data-bs-target="#bordered-vulns" type="button" role="tab" aria-controls="vulns" aria-selected="false">Vulnerabilities</button>
             </li>
         </ul>
 
@@ -213,8 +245,41 @@ $json = $json[0];
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="bordered-contact" role="tabpanel" aria-labelledby="contact-tab">
-            Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+            <div class="tab-pane fade" id="bordered-vulns" role="tabpanel" aria-labelledby="vulns-tab">
+            <?php
+            foreach($vulns as $vuln)
+            {
+                echo "<h5 class='card-title'>Vulnerabilities for: " . $vuln["SEARCH"] . "</h5>";
+
+                echo "
+                <table class='table datatable'>
+                    <thead>
+                        <tr>
+                            <th scope='col' data-sortable=''><a href='#' class='dataTable-sorter'>Title</a></th>
+                            <th scope='col' data-sortable=''><a href='#' class='dataTable-sorter'>Date</a></th>
+                            <th scope='col' data-sortable=''><a href='#' class='dataTable-sorter'>Type</a></th>
+                            <th scope='col' data-sortable=''><a href='#' class='dataTable-sorter'>Platform</a></th>
+                            <th scope='col' data-sortable=''><a href='#' class='dataTable-sorter'>Path</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+
+                    foreach($vuln["RESULTS_EXPLOIT"] as $exploit)
+                    {
+                        echo "
+                            <tr>
+                                <td>" . $exploit['Title'] . "</td>
+                                <td>" . $exploit['Date'] . "</td>
+                                <td>" . $exploit['Type'] . "</td>
+                                <td>" . $exploit['Platform'] . "</td>
+                                <td>" . $exploit['Path'] . "</td>
+                            </tr>";
+                    }
+
+                    echo "</tbody>
+                </table>";
+            }
+            ?>
             </div>
         </div>
     </div>
