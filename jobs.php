@@ -1,8 +1,10 @@
 <?php 
   head(tab: "Running Jobs", pdir: "Overview");
 
-  $dtGraph = loadJSON("/capability/utils/date-time-graph", true); 
-  $jtGraph = loadJSON("/capability/utils/date-job-type-graph", true); 
+  $stats = loadJSON("/capability/jobs/get/stats", true);
+  $dtGraph = $stats["TimeGraph"]; 
+  $jtGraph = $stats["TypeGraph"]; 
+  $lifecycleJobs = $stats["LifecycleJobs"];
 ?>
 
 <div class="row">
@@ -108,9 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </thead>
                 <tbody>
                     <?php
-                        $json = file_get_contents($GLOBALS['server'] . "/capability/manager/get-tracking");
-                        $json = json_decode($json, true);
-                        $json = array_reverse($json);
+                        $json = array_reverse($lifecycleJobs);
                         
                         foreach($json as $row)
                         {
@@ -159,13 +159,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 </thead>
                 <tbody>
                     <?php
-                        $json = file_get_contents($GLOBALS['server'] . "/capability/manager/get-tracking");
-                        $json = json_decode($json, true);
-                        $json = array_reverse($json);
+                        $json = array_reverse($lifecycleJobs);
                         
                         foreach($json as $row)
                         {
-                            if ($row["Tracking"]["Status"] != "DONE") {
+                            if ($row["Tracking"]["Status"] != "DONE") 
+                            {
                                 continue;
                             }
 

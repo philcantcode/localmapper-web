@@ -1,7 +1,7 @@
 <?php 
     $propCount = file_get_contents($GLOBALS['server'] . "/propositions/get-count");
     
-    $jobStats = file_get_contents($GLOBALS['server'] . "/capability/jobs/get-stats");
+    $jobStats = file_get_contents($GLOBALS['server'] . "/capability/jobs/get/stats");
     $jobStats = json_decode($jobStats, true);
 ?>
 

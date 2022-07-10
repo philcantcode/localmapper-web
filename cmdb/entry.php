@@ -266,7 +266,7 @@ if ($json["CMDBType"] == 0)
                 <div class="accordion accordion-flush" id="capability-accordion">
                 <?php
                 $count = 0;
-                $caps = loadJSON("/capability/get/cmdb-compatible/" . $id, true);
+                $caps = loadJSON("/compatability/get/capabilities/" . $id, true);
 
                 foreach($caps as $cap)
                 {
@@ -421,7 +421,7 @@ if ($json["CMDBType"] == 0)
 
             $.ajax(
             {
-                url: "<?php echo $GLOBALS['api']; ?>" + "/capability/run/cmdb-compatible/" + cmdbID + "/" + capID,
+                url: "<?php echo $GLOBALS['api']; ?>" + "/compatability/run/capabilities/" + cmdbID + "/" + capID,
                 type: "POST",
                 data: options,
                 success: function (response) {
