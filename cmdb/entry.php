@@ -272,7 +272,7 @@ $json = $json[0];
                                 <td>" . $exploit['Date'] . "</td>
                                 <td>" . $exploit['Type'] . "</td>
                                 <td>" . $exploit['Platform'] . "</td>
-                                <td>" . $exploit['Path'] . "</td>
+                                <td><button type='button' class='btn btn-sm btn-success searchsploit-dl' data-downloadID='" . $exploit['Path'] . "'>" . $exploit['Path'] . "</button></td>
                             </tr>";
                     }
 
@@ -460,6 +460,26 @@ if ($json["CMDBType"] == 0)
     $(window).on("load", function() {
         logTable = new simpleDatatables.DataTable("#log-table");
         systagsTable = new simpleDatatables.DataTable("#systags-table");
+
+        $(".searchsploit-dl").click(function () {
+            var path = $(this).attr("data-downloadID");
+
+            $.ajax(
+            {
+                url: "<?php echo $GLOBALS['api']; ?>" + "/tools/searchsploit/get-exploit",
+                type: "POST",
+                data: {
+                    path: path,
+                },
+                success: function (response) {
+                    var downloadFile = document.createElement('a');
+                    downloadFile.href = 'data:attachment/text,' + encodeURI(response);
+                    downloadFile.target = '_blank';
+                    downloadFile.download = path + '.txt';
+                    downloadFile.click();
+                }
+            });
+        });
 
         $(".run-capability").click(function () {
             var capID = $(this).attr("data-capability-id");
