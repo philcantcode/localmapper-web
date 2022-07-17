@@ -334,6 +334,13 @@
         </a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/capabilities/manage.php">
+          <i class="bi bi-share"></i>
+          <span>Manage Capability</span>
+        </a>
+      </li>
+
       <li class="nav-heading">CMDB</li>
 
       <li class="nav-item">

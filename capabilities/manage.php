@@ -8,14 +8,18 @@
 
 <script type="text/javascript">
 
-$(document).ready(function () 
+window.onload = function()
 {
+    console.log("Creating new");
+
     $.ajax(
     {
         url: "<?php echo $GLOBALS['server']; ?>" + "/capability/get/new",
         type: "POST",
         success: function (response) 
         {
+            console.log(response);
+
             response = JSON.parse(response);
             $("#jsonHTML").html(jsonToHtml(response));
         }
@@ -76,7 +80,7 @@ $(document).ready(function ()
     // For Key:Value pairs
     function inGroup(key, val)
     {
-        return `
+        return `    
             <div class='mb-2'>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -156,7 +160,7 @@ $(document).ready(function ()
     {
         $(this).closest("ul").remove();
     });
-});
+};
 
 </script>
 

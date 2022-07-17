@@ -247,6 +247,7 @@ $json = $json[0];
             </div>
             <div class="tab-pane fade" id="bordered-vulns" role="tabpanel" aria-labelledby="vulns-tab">
             <?php
+            
             foreach($vulns as $vuln)
             {
                 echo "<h5 class='card-title'>Vulnerabilities for: " . $vuln["SEARCH"] . "</h5>";
@@ -266,13 +267,16 @@ $json = $json[0];
 
                     foreach($vuln["RESULTS_EXPLOIT"] as $exploit)
                     {
+                        $pathParts = explode("/", $exploit["Path"]);
+                        $path = $pathParts[count($pathParts)-2] . "/" . $pathParts[count($pathParts)-1];
+
                         echo "
                             <tr>
                                 <td>" . $exploit['Title'] . "</td>
                                 <td>" . $exploit['Date'] . "</td>
                                 <td>" . $exploit['Type'] . "</td>
                                 <td>" . $exploit['Platform'] . "</td>
-                                <td><button type='button' class='btn btn-sm btn-success searchsploit-dl' data-downloadID='" . $exploit['Path'] . "'>" . $exploit['Path'] . "</button></td>
+                                <td><button type='button' class='btn btn-sm btn-success searchsploit-dl' data-downloadID='" . $exploit['Path'] . "'>" . $path . "</button></td>
                             </tr>";
                     }
 
@@ -472,8 +476,10 @@ if ($json["CMDBType"] == 0)
                     path: path,
                 },
                 success: function (response) {
+                    console.log(response);
+                    
                     var downloadFile = document.createElement('a');
-                    downloadFile.href = 'data:attachment/text,' + encodeURI(response);
+                    downloadFile.href = 'data:attachment/text,' + encodeURIComponent(response);
                     downloadFile.target = '_blank';
                     downloadFile.download = path + '.txt';
                     downloadFile.click();
