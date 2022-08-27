@@ -56,8 +56,9 @@ $json = $json[0];
                                 <i class="bi bi-laptop"></i>
                             </div>
                             <div class="ps-3">
-                                <h6>
-                                    <?php echo $json["Label"]; ?>
+                                <h6> 
+                                    <span contenteditable="true" id="title"><?php echo $json["Label"]; ?></span>
+                                    <i id="title_edit_icon" class="bi bi-pencil"></i>
                                 </h6>
                                 <span class="text-muted small pt-2 ps-1">
                                     <?php echo $json["Description"]; ?>
@@ -464,6 +465,7 @@ if ($json["CMDBType"] == 0)
     $(window).on("load", function() {
         logTable = new simpleDatatables.DataTable("#log-table");
         systagsTable = new simpleDatatables.DataTable("#systags-table");
+        $titleEditID = -1;
 
         $(".searchsploit-dl").click(function () {
             var path = $(this).attr("data-downloadID");
@@ -544,9 +546,41 @@ if ($json["CMDBType"] == 0)
         $("#all-logs").click(function () 
         {
             loadNmapLogs(`[{}]`, `[{}]`);
+        }); 
+
+        $("#title").on('DOMSubtreeModified', function()
+        {
+            if ($titleEditID != -1)
+            {
+                clearTimeout($titleEditID)
+                console.log("cleared");
+            }
+
+            $titleEditID = setTimeout(function ()
+            {
+                $.ajax(
+                {
+                    url: "<?php echo $GLOBALS['api']; ?>" + "/cmdb/update/title",
+                    type: "POST",
+                    data: {
+                        "cmdb_id": "<?php echo $id; ?>",
+                        "cmdb_title": $("#title").text(),
+                    },
+                    success: function (response) { 
+                        console.log("Updated title to " + $("#title").text());
+                        $("#title_edit_icon").css('color', 'green');
+
+                        setTimeout(function() 
+                        {
+                            $("#title_edit_icon").css('color', '#012970');
+                        }, 2000);
+                    }
+                });
+
+                $titleEditID = -1;
+            }, 2000); 
         });
-            
-    });
+    }); 
 
 /*
     `[{"args": "nmap -sn --system-dns -oX - 192.168.1.110"}]` //JSON.stringify(Array.from(filter))],
