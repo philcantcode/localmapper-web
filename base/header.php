@@ -272,24 +272,8 @@
 
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
-
         <ul class="sidebar-nav" id="sidebar-nav">
-
-            <li class="nav-heading">System</li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="index.php">
-                    <i class="bi bi-grid"></i>
-                    <span>Overview</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/dashboards.php">
-                    <i class="bi bi-grid"></i>
-                    <span>Dashboards</span>
-                </a>
-            </li>
+            <li class="nav-heading">Active Monitoring</li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/jobs.php">
@@ -318,36 +302,13 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/logs.php">
-                    <i class="bi bi-grid"></i>
-                    <span>Logs</span>
-                </a>
-            </li>
-
-            <li class="nav-heading">Capabilities</li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/capabilities/run.php">
-                    <i class="bi bi-share"></i>
-                    <span>Run Capability</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link collapsed" href="/capabilities/manage.php">
                     <i class="bi bi-share"></i>
                     <span>Manage Capability</span>
                 </a>
             </li>
 
-            <li class="nav-heading">CMDB</li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/cmdb/graph.php">
-                    <i class="bi bi-share"></i>
-                    <span>Graph View</span>
-                </a>
-            </li>
+            <li class="nav-heading">Active Monitoring - Devices</li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/cmdb/inventory.php">
@@ -372,21 +333,23 @@
                 </a>
             </li>
 
-            <li class="nav-heading">Admin</li>
-
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin.php">
-                    <i class="bi bi-grid"></i>
-                    <span>Accounts</span>
+                <a class="nav-link collapsed" href="/cmdb/inventory.php">
+                    <i class="bi bi-box"></i>
+                    <span>Inventory</span>
                 </a>
             </li>
 
+            <li class="nav-heading">Threat Intelligence & Classification</li>
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/dbhealth.php">
+                <a class="nav-link collapsed" href="/threat-intel/feeds.php">
                     <i class="bi bi-grid"></i>
-                    <span>Database Health</span>
+                    <span>Feeds</span>
                 </a>
             </li>
+
+            <li class="nav-heading">Settings</li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/server-health.php">
@@ -396,16 +359,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/webhealth.php">
+                <a class="nav-link collapsed" href="/settings.php">
                     <i class="bi bi-grid"></i>
-                    <span>Web Health</span>
+                    <span>Settings</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/settings.php">
+                <a class="nav-link collapsed" href="/logs.php">
                     <i class="bi bi-grid"></i>
-                    <span>Settings</span>
+                    <span>Logs</span>
                 </a>
             </li>
 
