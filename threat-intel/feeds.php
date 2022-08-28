@@ -26,7 +26,7 @@
                     <div class='col-4'>
                         <div class='card info-card sales-card'>
                             <div class='card-body'>
-                                <h5 class='card-title'>" . $wordlist["Description"] . " <span>| " . formatBytes($wordlist["Size"]) . "</span></h5>
+                                <h5 class='card-title'>" . $wordlist["Label"] . " <span>| " . formatBytes($wordlist["Size"]) . "</span></h5>
 
                                 <div class='d-flex align-items-center'>
                                     <div class='card-icon rounded-circle d-flex align-items-center justify-content-center'>
@@ -52,9 +52,9 @@
                     echo "
                                     </div>
                                     <div class='ps-3'>
-                                        <h6>
-                                        " . $wordlist["Label"] . "
-                                        </h6>
+                                        <p>
+                                        " . $wordlist["Description"] . "
+                                        </p>
                                     </div>
                                 </div>
                             </div>
